@@ -11,15 +11,21 @@
         .SetApplicationName("shared-app"); // AppName to share Keys...
 ```
 
-## Kubernetes Dashboard
-Auto created Secret after first App-Start.
+## AutoCreate SecretV1
+After the fist AppStart the Extension create a `SecretV1` if the `SecretName` not exsist in the `Namespace`.  
+We need this `AutoCreate` functionality to offer the same possibilities like the FileXmlRepository wich auto-create files...
 
-![Secret](kube-secret.png)
+![Secret](img/kube-secret.png)
 
 
 ## Demo
-In `/src` are have 3 Web-Projects to and in `/kubernetes` the deployment files.  
+In `/src` are have 3 different Web-Projects and in `/kubernetes` the needed deployment files.  
+Each of the Web-Projects is in a Pod from a StatefulSet and have a ServiceAccount. 
 
+In such a distributed enviroment you need to share your Encryption-Key between your Pods.
+The demo use `WebEncrypt` Container do Encrypt your String and use the `WebDecypt` Container to decrypt.  
+
+### Setup
 To use this with minikube follow this instructions:
 
 *Setup Docker Enviroment*
@@ -39,6 +45,8 @@ $ kubectl apply -f ./deploy.yaml # Create StatefulSets and deploy Pods
 
 ### WebEncrypt
 A Container to Encrypt Strings
+![web-encrypt](img/web-encrypt.png)
+
 ```bash
 $ kubectl port-forward test-encrypt-0 5000:80 # Portforward the WebEncrypt Container
 ```
@@ -51,7 +59,8 @@ The Content is now encryped.
 
 
 ### WebDecypt
-Another Container to Deccrypt the String
+Another Container to Decrypt the String
+![web-decrypt](img/web-decrypt.png)
 
 ```bash
 $ kubectl port-forward test-decrypt-0 5001:80 # Portforward the WebDecypt Container
@@ -65,15 +74,16 @@ The Content is now decryped.
 
 ### WebRef
 A Container without the Extension to test a Error.
+![web-ref](img/web-ref.png)
 ```bash
-$ kubectl port-forward test-ref-0 6000:80 # Portforward the WebRef Container
+$ kubectl port-forward test-ref-0 5500:80 # Portforward the WebRef Container
 ```
 
 Request the Containter with the Protected Content:
 
-http://localhost:6000/api/values/CfDJ8Luw7rO_rLRPlk_N26xWS9_YV2ynZMdQHKM68pDzSJ_GpTqZGdRX8m1UmRKFMmE3XOcZBIP4rTRJxLq0vQwKmW7YT_2SHqAtNof28Vj-MWbE2E251ITfH3ouS-rXkNcmQg
+http://localhost:5500/api/values/CfDJ8Luw7rO_rLRPlk_N26xWS9_YV2ynZMdQHKM68pDzSJ_GpTqZGdRX8m1UmRKFMmE3XOcZBIP4rTRJxLq0vQwKmW7YT_2SHqAtNof28Vj-MWbE2E251ITfH3ouS-rXkNcmQg
 
 Crash with Error 500 =>
 > System.Security.Cryptography.CryptographicException:   
-> The key {b3eeb0bb-acbf-4fb4-964f-cddbac564bdf} was not found in the key ring.
+> The key {bb997163-53c1-4ea1-be32-eac03d390397} was not found in the key ring.
 
