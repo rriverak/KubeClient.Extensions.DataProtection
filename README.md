@@ -5,20 +5,18 @@
 ```csharp
     services.AddDataProtection()
         .PersistKeysToKubeSecret(
-            KubeClient.KubeClientOptions.FromPodServiceAccount(), // KubeClientOptions
-            "core-dp-keymanager" // Secret Name 
+            // KubeClientOptions
+            KubeClient.KubeClientOptions.FromPodServiceAccount(),
+            // Secret Name
+            "core-dp-keymanager"  
         )
-        .SetApplicationName("shared-app"); // AppName to share Keys...
+        // AppName to share Keys...
+        .SetApplicationName("shared-app"); 
 ```
 
 ## AutoCreate SecretV1
-After the fist AppStart the Extension create a `SecretV1` if the `SecretName` not exsist in the `Namespace`.  
-We need this `AutoCreate` functionality to offer the same possibilities like the FileXmlRepository wich auto-create files...
+After the fist AppStart the Extension create a `SecretV1` if the `SecretName` not exsist in the `Namespace`. We need this `AutoCreate` functionality to offer the same possibilities like the FileXmlRepository wich auto-create files in a folder. In our case the `SecretV1` acts as a folder.
 
-*Use the default `DisableAutomaticKeyGeneration` function to disable this behavior.*
-```csharp
-    services.AddDataProtection().DisableAutomaticKeyGeneration();
-```
 
 ![Secret](img/kube-secret.png)
 
