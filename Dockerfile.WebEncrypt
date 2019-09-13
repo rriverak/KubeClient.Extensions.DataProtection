@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
 COPY ["src/WebEncrypt/WebEncrypt.csproj", "src/WebEncrypt/"]
 COPY ["src/KubeClient.Extensions.DataProtection/KubeClient.Extensions.DataProtection.csproj", "src/KubeClient.Extensions.DataProtection/"]
-RUN dotnet restore "WebEncrypt/WebEncrypt.csproj"
+RUN dotnet restore "src/WebEncrypt/WebEncrypt.csproj"
 COPY . .
 WORKDIR "src/WebEncrypt"
 RUN dotnet build "WebEncrypt.csproj" -c Release -o /app
