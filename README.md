@@ -15,15 +15,20 @@
 After the fist AppStart the Extension create a `SecretV1` if the `SecretName` not exsist in the `Namespace`.  
 We need this `AutoCreate` functionality to offer the same possibilities like the FileXmlRepository wich auto-create files...
 
+*Use the default `DisableAutomaticKeyGeneration` function to disable this behavior.*
+```csharp
+    services.AddDataProtection().DisableAutomaticKeyGeneration();
+```
+
 ![Secret](img/kube-secret.png)
 
 
 ## Demo
-In `/src` are have 3 different Web-Projects and in `/kubernetes` the needed deployment files.  
-Each of the Web-Projects is in a Pod from a StatefulSet and have a ServiceAccount. 
+In `/src` we have 3 different Web-Projects and in `/kubernetes` the deployment files.  
+Each of the Web-Projects is a Pod in a StatefulSet with a ServiceAccount. 
 
 In such a distributed enviroment you need to share your Encryption-Key between your Pods.
-The demo use `WebEncrypt` Container do Encrypt your String and use the `WebDecypt` Container to decrypt.  
+The demo use `WebEncrypt` Container do Encrypt your String and use the `WebDecypt` Container to decrypt.   
 
 ### Setup
 To use this with minikube follow this instructions:
@@ -45,7 +50,6 @@ $ kubectl apply -f ./deploy.yaml # Create StatefulSets and deploy Pods
 
 ### WebEncrypt
 A Container to Encrypt Strings
-![web-encrypt](img/web-encrypt.png)
 
 ```bash
 $ kubectl port-forward test-encrypt-0 5000:80 # Portforward the WebEncrypt Container
@@ -57,10 +61,10 @@ http://localhost:5000/api/values/MySecretContent
 The Content is now encryped.
 >CfDJ8Luw7rO_rLRPlk_N26xWS9_YV2ynZMdQHKM68pDzSJ_GpTqZGdRX8m1UmRKFMmE3XOcZBIP4rTRJxLq0vQwKmW7YT_2SHqAtNof28Vj-MWbE2E251ITfH3ouS-rXkNcmQg
 
+![web-encrypt](img/web-encrypt.png)
 
 ### WebDecypt
 Another Container to Decrypt the String
-![web-decrypt](img/web-decrypt.png)
 
 ```bash
 $ kubectl port-forward test-decrypt-0 5001:80 # Portforward the WebDecypt Container
@@ -72,9 +76,10 @@ http://localhost:5001/api/values/CfDJ8Luw7rO_rLRPlk_N26xWS9_YV2ynZMdQHKM68pDzSJ_
 The Content is now decryped.
 > MySecretContent
 
+![web-decrypt](img/web-decrypt.png)
+
 ### WebRef
 A Container without the Extension to test a Error.
-![web-ref](img/web-ref.png)
 ```bash
 $ kubectl port-forward test-ref-0 5500:80 # Portforward the WebRef Container
 ```
@@ -87,3 +92,4 @@ Crash with Error 500 =>
 > System.Security.Cryptography.CryptographicException:   
 > The key {bb997163-53c1-4ea1-be32-eac03d390397} was not found in the key ring.
 
+![web-ref](img/web-ref.png)
