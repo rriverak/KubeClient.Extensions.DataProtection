@@ -12,6 +12,7 @@
 ```
 
 ## Kubernetes Dashboard
+Auto created Secret after first App-Start.
 
 ![Secret](kube-secret.png)
 
@@ -37,6 +38,7 @@ $ kubectl apply -f ./deploy.yaml # Create StatefulSets and deploy Pods
 ```
 
 ### WebEncrypt
+A Container to Encrypt Strings
 ```bash
 $ kubectl port-forward test-encrypt-0 5000:80 # Portforward the WebEncrypt Container
 ```
@@ -49,6 +51,8 @@ The Content is now encryped.
 
 
 ### WebDecypt
+Another Container to Deccrypt the String
+
 ```bash
 $ kubectl port-forward test-decrypt-0 5001:80 # Portforward the WebDecypt Container
 ```
@@ -60,6 +64,7 @@ The Content is now decryped.
 > MySecretContent
 
 ### WebRef
+A Container without the Extension to test a Error.
 ```bash
 $ kubectl port-forward test-ref-0 6000:80 # Portforward the WebRef Container
 ```
