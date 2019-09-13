@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+WORKDIR /src
+COPY ["src/WebEncrypt/WebEncrypt.csproj", "src/WebEncrypt/"]
+COPY ["src/KubeClient.Extensions.DataProtection/KubeClient.Extensions.DataProtection.csproj", "src/KubeClient.Extensions.DataProtection/"]
+RUN dotnet restore "WebEncrypt/WebEncrypt.csproj"
+COPY . .
+WORKDIR "src/WebEncrypt"
+RUN dotnet build "WebEncrypt.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "WebEncrypt.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "WebEncrypt.dll"]

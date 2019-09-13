@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+WORKDIR /src
+COPY ["src/WebDecrypt/WebDecrypt.csproj", "src/WebDecrypt/"]
+COPY ["src/KubeClient.Extensions.DataProtection/KubeClient.Extensions.DataProtection.csproj", "src/KubeClient.Extensions.DataProtection/"]
+RUN dotnet restore "WebDecrypt/WebDecrypt.csproj"
+COPY . .
+WORKDIR "src/WebDecrypt"
+RUN dotnet build "WebDecrypt.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "WebDecrypt.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "WebDecrypt.dll"]

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KubeClient.Extensions.DataProtection", "KubeClient.Extensions.DataProtection\KubeClient.Extensions.DataProtection.csproj", "{F70EFB15-4D2A-497A-BC62-832514FE1D4B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebEncrypt", "WebEncrypt\WebEncrypt.csproj", "{97ECE464-D817-4782-81D7-24D428ABBBCD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDecrypt", "WebDecrypt\WebDecrypt.csproj", "{38EB5849-FEF5-4358-A3D8-3F38FDF4D41C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebRef", "WebRef\WebRef.csproj", "{558488B5-7861-49B2-B535-6D6875214E13}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F70EFB15-4D2A-497A-BC62-832514FE1D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70EFB15-4D2A-497A-BC62-832514FE1D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70EFB15-4D2A-497A-BC62-832514FE1D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70EFB15-4D2A-497A-BC62-832514FE1D4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97ECE464-D817-4782-81D7-24D428ABBBCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97ECE464-D817-4782-81D7-24D428ABBBCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97ECE464-D817-4782-81D7-24D428ABBBCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97ECE464-D817-4782-81D7-24D428ABBBCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38EB5849-FEF5-4358-A3D8-3F38FDF4D41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38EB5849-FEF5-4358-A3D8-3F38FDF4D41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38EB5849-FEF5-4358-A3D8-3F38FDF4D41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38EB5849-FEF5-4358-A3D8-3F38FDF4D41C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{558488B5-7861-49B2-B535-6D6875214E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{558488B5-7861-49B2-B535-6D6875214E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{558488B5-7861-49B2-B535-6D6875214E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{558488B5-7861-49B2-B535-6D6875214E13}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA51B3F7-C2F9-464E-A982-BE37D6326E6F}
+	EndGlobalSection
+EndGlobal

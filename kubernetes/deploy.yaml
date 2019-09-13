@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "test-encrypt"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app/name: "encrypt"
+  template:
+    metadata:
+      labels:
+        app/name: "encrypt"
+    spec:
+      serviceAccountName: "test-user"
+      containers:
+        - name: encrypt
+          image: "webencrypt:latest"
+          imagePullPolicy: Never
+          ports:
+            - name: http-seed
+              containerPort: 80
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "test-decrypt"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app/name: "decrypt"
+  template:
+    metadata:
+      labels:
+        app/name: "decrypt"
+    spec:
+      serviceAccountName: "test-user"
+      containers:
+        - name: decrypt
+          image: "webdecrypt:latest"
+          imagePullPolicy: Never
+          ports:
+            - name: http-seed
+              containerPort: 80
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "test-ref"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app/name: "webref"
+  template:
+    metadata:
+      labels:
+        app/name: "webref"
+    spec:
+      containers:
+        - name: decrypt
+          image: "webref:latest"
+          imagePullPolicy: Never
+          ports:
+            - name: http-seed
+              containerPort: 80
+              protocol: TCP
