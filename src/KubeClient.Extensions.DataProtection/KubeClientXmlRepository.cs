@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.DataProtection.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -30,6 +31,9 @@ namespace KubeClient.Extensions.DataProtection
         /// </summary>
         private readonly string _kubeNamespace;
 
+        /// <summary>
+        /// <see cref="SecretV1"/> used to manage the XML Keyfiles.
+        /// </summary>
         private SecretV1 _keyManagementSecret { get; set; }
         /// <summary>
         /// An XML repository backed by KubeClient.
@@ -83,6 +87,11 @@ namespace KubeClient.Extensions.DataProtection
             // Convert to Base64 String
             var base64String = Convert.ToBase64String(Encoding.UTF8.GetBytes(xmlString));
 
+            // Add XML File Extension to allow others File-Mapping
+            if (string.IsNullOrEmpty(Path.GetExtension(friendlyName))){
+                friendlyName += ".xml";
+            }
+            
             // Add to Data
             this._keyManagementSecret.Data.Add(friendlyName, base64String);
 
